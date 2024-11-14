@@ -55,4 +55,20 @@ module calculo_est
         res = soma 
     end function
 
+    !Cálculo da Soma dos Produtos dos desvios "SPD_xy", de x e y
+    function MMS(x,y,N) result(res)
+        integer(kind=i4) :: i
+        integer(kind=i4), intent(in) :: t
+        real(kind=dp) :: soma, res
+        real(kind=dp) :: x(1:N)
+        soma = 0.0_dp
+        do i = 1, N
+            soma = soma + x(i+t)
+            i = i+t
+        end do
+        res = soma/t
+    end do       
+    end function
+
+
 end module calculo_est
