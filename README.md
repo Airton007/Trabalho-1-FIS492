@@ -18,7 +18,7 @@ Este programa é uma aplicação que realiza cálculos estatísticos básicos so
    - **Coeficiente de Correlação (Pearson)**: Avalia a correlação linear entre `x` e `y`.
 
 3. **Geração de Números Aleatórios**:
-   - Utiliza o gerador **KISS05** (Keep It Simple Stupid), baseado em um algoritmo eficiente e de alta periodicidade (> \(2^{123}\)).
+   - Utiliza o gerador **KISS05** (Keep It Simple Stupid), baseado em um algoritmo eficiente e de alta periodicidade.
    - Os números podem ser ajustados para um intervalo específico, como `[100, 1000]`.
 
 ---
@@ -69,7 +69,6 @@ Este programa é uma aplicação que realiza cálculos estatísticos básicos so
 - Implementação Fortran criada por Thomas Vojta.
 - Algoritmo e teoria detalhados em:
   - Grupo de discussão **sci.math.num-analysis**, novembro de 2005.
-  - Arquivo: [sci.tech-archive.net](http://sci.tech-archive.net/Archive/sci.math.num-analysis/2005-11/msg00352.html).
 
 ---
 
