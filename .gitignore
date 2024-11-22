@@ -1,2 +1,6 @@
 *.out
 *.mod
+*.dat
+*fort
+*teste.f90
+*teste2.f90
