@@ -17,7 +17,7 @@ program estatistica
     
     ! Variáveis para variâncias, desvios padrão e coeficiente de correlação
     real(kind=dp) :: S_x, S_y, desvio_x, desvio_y, r_xy
-
+    
     ! Variáveis e geradores para números pseudoaleatórios
     integer(kind=i4) :: seed1, seed2
     type(rndgen) :: gerador1, gerador2
@@ -25,7 +25,7 @@ program estatistica
     ! Solicita ao usuário o modo de operação
     write(*,*)"Digite ""S"" se deseja escrever os valores manualmente, ""N"" se deseja usar um arquido do tipo .dat ou ""A"" se deseja que os pares sejam gerados aleatoriamente"
     read(*,*) escolha
-
+    
     ! Condicional para o modo manual
     if (escolha == "S" .or. escolha == "s") then
         write(*,*) "Escreva o número de termos ""N"" "
@@ -49,30 +49,10 @@ program estatistica
             write(arquivo, *) x(i), y(i)
         end do
         close(arquivo)
-
-        ! Calcula e exibe as estatísticas
-        media_x = media(x, N)  
-        media_y = media(y, N)
-        print*, "A media de x é:", media_x
-        print*, "A media de y é:", media_y
-
-        S_x = SQD(x, N) / (N - 1)  ! Variância de x
-        S_y = SQD(y, N) / (N - 1)  ! Variância de y
-        print*, "A variância de x é:", S_x
-        print*, "A variância de y é:", S_y
-
-        desvio_x = sqrt(S_x)       ! Desvio padrão de x
-        desvio_y = sqrt(S_y)       ! Desvio padrão de y
-        print*, "O desvio padrão de x é:", desvio_x
-        print*, "O desvio padrão de y é:", desvio_y
-
-        r_xy = SPD_xy(x, y, N) / sqrt(SQD(x, N) * SQD(y, N))  ! Coeficiente de correlação
-        print*, "O coeficiente de Pearson é:", r_xy
-
     ! Condicional para o modo de leitura de arquivo
     else if (escolha == "N" .or. escolha == "n") then
         open(newunit=arquivo, file="dados.dat", action="read")  ! Abre o arquivo de dados
-
+        
         ! Conta o número de linhas no arquivo
         N = 0
         do
@@ -89,35 +69,15 @@ program estatistica
             read(arquivo, *) x(i), y(i)  ! Lê os valores do arquivo
         end do
         close(arquivo)
-
-        ! Calcula e exibe as estatísticas
-        media_x = media(x, N)  
-        media_y = media(y, N)
-        print*, "A media de x é:", media_x
-        print*, "A media de y é:", media_y
-
-        S_x = SQD(x, N) / (N - 1)
-        S_y = SQD(y, N) / (N - 1)
-        print*, "A variância de x é:", S_x
-        print*, "A variância de y é:", S_y
-
-        desvio_x = sqrt(S_x)
-        desvio_y = sqrt(S_y)
-        print*, "O desvio padrão de x é:", desvio_x
-        print*, "O desvio padrão de y é:", desvio_y
-
-        r_xy = SPD_xy(x, y, N) / sqrt(SQD(x, N) * SQD(y, N))
-        print*, "O coeficiente de Pearson é:", r_xy
-
     ! Condicional para o modo de geração aleatória
     else if (escolha == "A" .or. escolha == "a") then
         write(*,*) "Escreva o número de termos ""N"" "
         read(*,*) N    
         
-        write(*,*) "Escreva a primeira semente, para os valores de x, qualquer número entre 1-1000"
+        write(*,*) "Escreva a primeira semente, para os valores de x, qualquer número entre 1-100"
         read(*,*) seed1    
         
-        write(*,*) "Escreva a segunda semente, para os valores de y, qualquer número entre 1-1000"
+        write(*,*) "Escreva a segunda semente, para os valores de y, qualquer número entre 1-100"
         read(*,*) seed2    
 
         call gerador1%init(seed1)  ! Inicializa o gerador para x
@@ -127,13 +87,13 @@ program estatistica
         
         allocate(x(N), y(N))
         do k = 1, N
-            x(k) = gerador1%real(real(100, kind=dp), real(1000, kind=dp))
-            y(k) = gerador2%real(real(100, kind=dp), real(1000, kind=dp))            
+            x(k) = gerador1%real(real(10, kind=dp), real(100, kind=dp))
+            y(k) = gerador2%real(real(10, kind=dp), real(100, kind=dp))            
             write(arquivo2, *) x(k), y(k)  ! Salva os valores gerados
         end do
         close(arquivo2)
-
-        ! Calcula e exibe as estatísticas
+    end if
+            ! Calcula e exibe as estatísticas
         media_x = media(x, N)  
         media_y = media(y, N)
         print*, "A media de x é:", media_x
@@ -151,8 +111,5 @@ program estatistica
 
         r_xy = SPD_xy(x, y, N) / sqrt(SQD(x, N) * SQD(y, N))
         print*, "O coeficiente de Pearson é:", r_xy
-
-        deallocate(x, y)  ! Libera a memória alocada
-    end if
 
 end program estatistica
