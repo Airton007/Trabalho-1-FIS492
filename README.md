@@ -1,5 +1,5 @@
 
-# Estatísticas Básicas e Gerador de Números Aleatórios em Fortran
+# Estatísticas Básicas em Fortran
 
 Este programa é uma aplicação desenvolvida em Fortran que realiza cálculos estatísticos básicos sobre pares de valores `(x, y)`. Ele suporta entrada manual ou leitura de arquivo de dados. O módulo principal (`est_basic_mod`) encapsula funcionalidades para cálculos estatísticos.
 
