@@ -1,12 +1,11 @@
 program estatistica
     use est_basic_mod  ! Importa o módulo com funções estatísticas básicas
-    use, intrinsic :: iso_fortran_env, only: sp => real32, dp => real64, i4 => int32
     implicit none
 
     ! Declaração das variáveis
     type(calculo_estatistica) :: est
     integer(kind=i4) :: N                               ! Tamanho do vetor ou número total de amostras
-    character(len=100) :: modo                       ! Escolha do modo de operação (manual"S" ou arquivo "N")
+    character(len=100) :: modo                          ! Escolha do modo de operação (manual"S" ou arquivo "N")
     real(kind=dp) :: media_x, media_y                   ! Variáveis para médias
     real(kind=dp) :: var_x, var_y, desvio_x, desvio_y   ! Variáveis para variâncias, desvios padrão
     real(kind=dp) :: r_xy, cv_x, cv_y                   ! Variáveias para coeficiente de correlação (Pearson) e coeficientes de variação

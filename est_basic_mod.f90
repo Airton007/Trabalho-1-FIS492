@@ -1,8 +1,6 @@
 module est_basic_mod
     use, intrinsic :: iso_fortran_env, only: sp=>real32, dp=>real64, i4=>int32
     implicit none
-
-
     type :: calculo_estatistica
         real(kind=dp), allocatable :: x(:), y(:)
         integer(kind=i4) :: N
@@ -41,7 +39,9 @@ subroutine ler_dados(est, modo, nome_arquivo)
             read(*,*) est%y(i)
         end do
     else if (modo == "arquivo".and. present(nome_arquivo)) then
+        
         open(newunit=arquivo, file=nome_arquivo, action="read")
+        
         ! Conta o número de linhas no arquivo
         est%N = 0
         do
