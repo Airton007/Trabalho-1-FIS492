@@ -49,4 +49,4 @@ program estatistica
     print*, "Coeficiente de Variação de x", cv_x
     print*, "Coeficiente de Variação de y", cv_y
 
-end program estatistica
+end program
