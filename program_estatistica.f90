@@ -16,14 +16,15 @@ program estatistica
     real(kind=dp) :: media_x, media_y
     
     ! Variáveis para variâncias, desvios padrão e coeficiente de correlação
-    real(kind=dp) :: S_x, S_y, desvio_x, desvio_y, r_xy
+    real(kind=dp) :: S_x, S_y, desvio_x, desvio_y, r_xy, Cv_x, Cv_y
     
     ! Variáveis e geradores para números pseudoaleatórios
     integer(kind=i4) :: seed1, seed2
     type(rndgen) :: gerador1, gerador2
 
     ! Solicita ao usuário o modo de operação
-    write(*,*)"Digite ""S"" se deseja escrever os valores manualmente, ""N"" se deseja usar um arquido do tipo .dat ou ""A"" se deseja que os pares sejam gerados aleatoriamente"
+    write(*,*)"Digite ""S"" se deseja escrever os valores manualmente, ""N"" se deseja usar um arquido &
+    do tipo .dat ou ""A"" se deseja que os pares sejam gerados aleatoriamente"
     read(*,*) escolha
     
     ! Condicional para o modo manual
@@ -49,6 +50,7 @@ program estatistica
             write(arquivo, *) x(i), y(i)
         end do
         close(arquivo)
+
     ! Condicional para o modo de leitura de arquivo
     else if (escolha == "N" .or. escolha == "n") then
         open(newunit=arquivo, file="dados.dat", action="read")  ! Abre o arquivo de dados
@@ -69,6 +71,7 @@ program estatistica
             read(arquivo, *) x(i), y(i)  ! Lê os valores do arquivo
         end do
         close(arquivo)
+
     ! Condicional para o modo de geração aleatória
     else if (escolha == "A" .or. escolha == "a") then
         write(*,*) "Escreva o número de termos ""N"" "
@@ -93,23 +96,30 @@ program estatistica
         end do
         close(arquivo2)
     end if
-            ! Calcula e exibe as estatísticas
-        media_x = media(x, N)  
-        media_y = media(y, N)
-        print*, "A media de x é:", media_x
-        print*, "A media de y é:", media_y
 
-        S_x = SQD(x, N) / (N - 1)
-        S_y = SQD(y, N) / (N - 1)
-        print*, "A variância de x é:", S_x
-        print*, "A variância de y é:", S_y
+    ! Calcula e exibe as estatísticas
+    media_x = sum(x)/N  
+    media_y = sum(y)/N
+    print*, "A media de x é:", media_x
+    print*, "A media de y é:", media_y
 
-        desvio_x = sqrt(S_x)
-        desvio_y = sqrt(S_y)
-        print*, "O desvio padrão de x é:", desvio_x
-        print*, "O desvio padrão de y é:", desvio_y
+    S_x = SQD(x,N)/(N-1)
+    S_y = SQD(y,N)/(N-1)
+    print*, "A variância de x é:", S_x
+    print*, "A variância de y é:", S_y
 
-        r_xy = SPD_xy(x, y, N) / sqrt(SQD(x, N) * SQD(y, N))
-        print*, "O coeficiente de Pearson é:", r_xy
+    desvio_x = sqrt(S_x)
+    desvio_y = sqrt(S_y)
+    print*, "O desvio padrão de x é:", desvio_x
+    print*, "O desvio padrão de y é:", desvio_y
+
+    call coef_pearson_xy(x,y,N,r_xy)
+    print*, "O coeficiente de Pearson é:", r_xy
+
+    call coef_var(x,N,desvio_x, Cv_x)
+    print*, "O coeficiente de Variação é:", Cv_x
+
+    call coef_var(y,N,desvio_y, Cv_y)
+    print*, "O coeficiente de Variação é:", Cv_y
 
 end program estatistica
